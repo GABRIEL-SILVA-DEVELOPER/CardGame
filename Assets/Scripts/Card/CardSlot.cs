@@ -1,0 +1,112 @@
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class CardSlot : MonoBehaviour, IDropHandler
+{
+    public enum SlotType { DECK, HAND, BAG, HERO }
+    public SlotType type;
+ 
+    public Card currentCard;
+
+
+    private void Start()
+    {
+        Card.OnAnyCardChangeParent += CheckCardChangeSlot;
+        Card.OnAnyCardDestroyed += CheckCardDestroyed;
+
+        Card initialCard = GetComponentInChildren<Card>();
+        if (initialCard != null) currentCard = initialCard;
+    }
+
+    private void OnDisable()
+    {
+        Card.OnAnyCardChangeParent -= CheckCardChangeSlot;
+        Card.OnAnyCardDestroyed -= CheckCardDestroyed;
+    }
+
+    #region Event Handler
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+
+        Card droppedCard = eventData.pointerDrag?.GetComponent<Card>();
+
+        if (droppedCard != null)
+        {
+            HandleCardDrop(droppedCard);
+        }
+    }
+
+    private void CheckCardChangeSlot(Card card)
+    {
+        if (card == currentCard && card.GetParent() != this.transform)
+        {
+            currentCard = null;
+        }
+    }
+
+    private void CheckCardDestroyed(Card card)
+    {
+        // bad boilerplate
+        if (card == currentCard)
+        {
+            currentCard = null;
+        }
+    }
+
+    #endregion
+
+
+    private void HandleCardDrop(Card card)
+    {
+        if (type == SlotType.BAG && currentCard == null)
+        {
+            if (card.Data.type == CardData.CardType.MONSTER) return;
+            
+            PlaceInSlot(card);
+            Debug.Log("Card on BAG!");
+        }
+        else if (type == SlotType.HAND && currentCard == null)
+        {
+            if (card.Data.type != CardData.CardType.WEAPON) return;
+
+            PlaceInSlot(card);
+            Debug.Log("Card on HAND!");
+        }
+        else if (type == SlotType.DECK && currentCard != null)
+        {
+            if (currentCard.Data.type == CardData.CardType.MONSTER && card.Data.type == CardData.CardType.WEAPON)
+            {
+                CombatManager.Instance.StartCombate(card, currentCard);
+            }
+        }
+        else if (type == SlotType.HERO)
+        {
+            if (card.Data.type == CardData.CardType.MONSTER)
+            {
+                HeroManager.Instance.ReciveDamage(card);
+            }
+            else if (card.Data.type == CardData.CardType.BUFF)
+            {
+                if (card.Data.buffType == CardData.BuffType.HEAL)
+                {
+                    HeroManager.Instance.Heal(card);
+                }
+                else if (card.Data.buffType == CardData.BuffType.SHIELD_BUFF)
+                {
+                    HeroManager.Instance.Shield(card);
+                }
+            }
+        }
+
+    }
+
+    private void PlaceInSlot(Card card)
+    {
+        currentCard = card;
+        card.UpdateParent(this.transform);
+        card.MoveToParent();
+    }
+
+}
