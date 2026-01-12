@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Heal
   description: 
-  mainIcon: {fileID: 21300000, guid: 259317a3fa77b4619b4356af5648368f, type: 3}
+  mainIcon: {fileID: 21300000, guid: bdc63b1c430da7847a845085c828118d, type: 3}
   type: 2
   buffType: 1
   cardValue: 5
-  cardValueIcon: {fileID: 21300000, guid: c34cd61ed96ff9a40a54e159467c5155, type: 3}
+  cardValueIcon: {fileID: 21300000, guid: daa49a1f06460a04b9827dd6f0bace08, type: 3}
   themeColor: {r: 0.011213779, g: 1, b: 0, a: 0}

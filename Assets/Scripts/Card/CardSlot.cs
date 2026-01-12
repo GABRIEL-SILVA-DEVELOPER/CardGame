@@ -48,7 +48,6 @@ public class CardSlot : MonoBehaviour, IDropHandler
 
     private void CheckCardDestroyed(Card card)
     {
-        // bad boilerplate
         if (card == currentCard)
         {
             currentCard = null;
@@ -92,10 +91,6 @@ public class CardSlot : MonoBehaviour, IDropHandler
                 if (card.Data.buffType == CardData.BuffType.HEAL)
                 {
                     HeroManager.Instance.Heal(card);
-                }
-                else if (card.Data.buffType == CardData.BuffType.SHIELD_BUFF)
-                {
-                    HeroManager.Instance.Shield(card);
                 }
             }
         }

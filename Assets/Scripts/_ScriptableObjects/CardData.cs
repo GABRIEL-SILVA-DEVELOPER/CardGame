@@ -4,7 +4,7 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
     public enum CardType { MONSTER, WEAPON, BUFF }
-    public enum BuffType { NONE, HEAL, WEAPON_BUFF, SHIELD_BUFF }
+    public enum BuffType { NONE, HEAL, WEAPON_BUFF }
 
     [Header("Identity")]
     public string cardName;

@@ -8,7 +8,6 @@ public class HeroManager : MonoBehaviour
     static void Init() { Instance = null; }
 
     public int life = 10;
-    public int shield = 0;
 
 
     private void Awake()
@@ -20,7 +19,7 @@ public class HeroManager : MonoBehaviour
 
     public void ReciveDamage(Card card)
     {
-        life -= card.GetCardDataValue();
+        life -= card.GetCardValue();
 
         if (life <= 0)
         {
@@ -33,7 +32,7 @@ public class HeroManager : MonoBehaviour
 
     public void Heal(Card card)
     {
-        life += card.GetCardDataValue();
+        life += card.GetCardValue();
 
         if (life > 10)
         {
@@ -42,19 +41,6 @@ public class HeroManager : MonoBehaviour
 
         Destroy(card.gameObject);
     }
-
-    public void Shield(Card card)
-    {
-        shield += card.GetCardDataValue();
-
-        if (shield > 10)
-        {
-            shield = 10;
-        }
-
-        Destroy(card.gameObject);
-    }
-
 
     private void Die()
     {

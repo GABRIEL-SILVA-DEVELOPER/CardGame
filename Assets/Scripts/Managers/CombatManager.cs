@@ -17,22 +17,22 @@ public class CombatManager : MonoBehaviour
 
     public void StartCombate(Card weaponCard, Card monsterCard)
     {
-        int damage = weaponCard.GetCardDataValue();
-        int monsterHealth = monsterCard.GetCardDataValue();
+        int damage = weaponCard.GetCardValue();
+        int monsterHealth = monsterCard.GetCardValue();
 
-        int finalDamage = monsterHealth - damage;
+        monsterHealth -= damage;
 
-        if (finalDamage <= 0)
+        if (monsterHealth <= 0)
         {
-            monsterCard.SetCardDataValue(0);
-            monsterCard.GetCardVisual().UpdateVisualData();
+            monsterCard.SetCardValue(0);
+            monsterCard.GetCardVisual().UpdateVisual();
 
             Destroy(monsterCard.gameObject);
         }
         else
         {
-            monsterCard.SetCardDataValue(finalDamage);
-            monsterCard.GetCardVisual().UpdateVisualData();
+            monsterCard.SetCardValue(monsterHealth);
+            monsterCard.GetCardVisual().UpdateVisual();
         }
 
         Destroy(weaponCard.gameObject);

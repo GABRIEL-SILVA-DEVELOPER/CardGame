@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class CardVisual : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float followSpeed = 40.0f;
+    [SerializeField] private float followSpeed = 40f;
     [Header("Rotation Settings")]
-    [SerializeField] private float rotationAmount = 45.0f;
-    [SerializeField] private float rotationSpeed  = 45.0f;
+    [SerializeField] private float rotationAmount = 45f;
+    [SerializeField] private float rotationSpeed  = 45f;
     private Vector3 movementDelta;
     private Vector3 rotationDelta;
     [Header("Tilt Settings")]
@@ -21,6 +21,7 @@ public class CardVisual : MonoBehaviour
     [SerializeField] private Image mainIcon;
     [SerializeField] private Image shadowMainIcon;
     [SerializeField] private Image valueIcon;
+    [SerializeField] private Image valueIconShadow;
     [SerializeField] private TextMeshProUGUI valueText;
     [SerializeField] private GameObject shadowObject; 
     [Header("Canvas Settings")]
@@ -36,16 +37,11 @@ public class CardVisual : MonoBehaviour
 
     public void Initialize(Card card)
     {
-        // Internal references
-
         canvas = GetComponent<Canvas>();
-        if (canvas == null) Debug.LogError("CardVisual.cs could not find the 'Canvas' component.");
         canvas.overrideSorting = true;
         canvas.sortingOrder = defaultSortingOrder;
 
         if (shadowObject != null) shadowObject.SetActive(false);
-
-        // External references
 
         parentCard = card;
         cardTransform = parentCard.transform;
@@ -55,7 +51,7 @@ public class CardVisual : MonoBehaviour
         parentCard.PointerEnterEvent.AddListener(CardPointerEnter);
         parentCard.PointerExitEvent.AddListener(CardPointerExit);
 
-        UpdateVisualData();
+        UpdateVisual();
 
         isInitialize = true;
     }
@@ -73,14 +69,15 @@ public class CardVisual : MonoBehaviour
         }
     }
 
-    public void UpdateVisualData()
+    public void UpdateVisual()
     {
         if (parentCard == null) return;
 
         mainIcon.sprite = parentCard.Data.mainIcon;
         shadowMainIcon.sprite = parentCard.Data.mainIcon; 
         valueIcon.sprite = parentCard.Data.cardValueIcon;
-        valueText.text = parentCard.GetCardDataValue().ToString();
+        valueIconShadow.sprite = valueIcon.sprite;
+        valueText.text = parentCard.GetCardValue().ToString();
     }
 
     #region Event Handler
@@ -88,26 +85,31 @@ public class CardVisual : MonoBehaviour
     private void CardBeginDrag(Card card)
     {
         if (shadowObject != null) shadowObject.SetActive(true);
-
         canvas.sortingOrder = draggingSortingOrder;
+
         transform.DOScale(1.2f, 0.2f);
     }
 
     private void CardEndDrag(Card card)
     {
         if (shadowObject != null) shadowObject.SetActive(false);
-
         canvas.sortingOrder = defaultSortingOrder;
+
         transform.DOScale(1.0f, 0.2f);
     }
 
     private void CardPointerEnter(Card card)
     {
-        transform.DOScale(1.1f, 0.2f);
+        if (parentCard.IsDragging) return;
+
+        transform.DOScale(1.1f, 0.2f).SetEase(Ease.OutBack);
     }
 
     private void CardPointerExit(Card card)
     {
+        transform.DOKill();
+        tiltPivot.DOKill();
+
         transform.DOScale(1.0f, 0.2f);
     }
 

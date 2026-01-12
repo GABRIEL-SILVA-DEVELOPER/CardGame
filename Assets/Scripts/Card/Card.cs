@@ -16,7 +16,7 @@ public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHan
     [HideInInspector] public UnityEvent<Card> EndDragEvent;
     [Header("Card Data Settings")]
     [SerializeField] private CardData data;
-    private int cardDataValue;
+    private int cardValue;
     [Header("Clamp Settings")]
     [SerializeField] private float horizontalPadding = 0.5f;
     [SerializeField] private float verticalPadding = 1.0f;
@@ -37,7 +37,7 @@ public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHan
         imageComponent = GetComponent<Image>();
         canvas = GetComponentInParent<Canvas>();
 
-        if (data != null) cardDataValue = data.cardValue;
+        if (data != null) cardValue = data.cardValue;
     }
 
     private void Start()
@@ -156,14 +156,14 @@ public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHan
         return visual;
     }
 
-    public int GetCardDataValue()
+    public int GetCardValue()
     {
-        return cardDataValue;
+        return cardValue;
     }
 
-    public void SetCardDataValue(int newValue)
+    public void SetCardValue(int newValue)
     {
-        cardDataValue = newValue;
+        cardValue = newValue;
     }
 
     public Transform GetParent()
