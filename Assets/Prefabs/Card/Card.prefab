@@ -143,6 +143,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   data: {fileID: 0}
-  horizontalPadding: 0.5
-  verticalPadding: 1
+  horizontalPadding: 0.2
+  verticalPadding: 0.3
   cardVisualPrefab: {fileID: -4259651761913798542, guid: 083a575d5f3e23f4c9ec0b99b8fb18a4, type: 3}

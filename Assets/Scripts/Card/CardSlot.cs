@@ -59,6 +59,11 @@ public class CardSlot : MonoBehaviour, IDropHandler
 
     private void HandleCardDrop(Card card)
     {
+        if (HasCard() && currentCard == null)
+        {
+            currentCard = GetComponentInChildren<Card>();
+        }
+
         if (type == SlotType.BAG && currentCard == null)
         {
             if (card.Data.type == CardData.CardType.MONSTER) return;
@@ -77,20 +82,22 @@ public class CardSlot : MonoBehaviour, IDropHandler
         {
             if (currentCard.Data.type == CardData.CardType.MONSTER && card.Data.type == CardData.CardType.WEAPON)
             {
-                CombatManager.Instance.StartCombate(card, currentCard);
+                CombatManager.Instance.StartCombat(card, currentCard);
             }
         }
         else if (type == SlotType.HERO)
         {
             if (card.Data.type == CardData.CardType.MONSTER)
             {
-                HeroManager.Instance.ReciveDamage(card);
+                HeroManager.Instance.ReciveDamage(card.GetCardValue());
+                Destroy(card.gameObject);
             }
             else if (card.Data.type == CardData.CardType.BUFF)
             {
                 if (card.Data.buffType == CardData.BuffType.HEAL)
                 {
-                    HeroManager.Instance.Heal(card);
+                    HeroManager.Instance.Heal(card.GetCardValue());
+                    Destroy(card.gameObject);
                 }
             }
         }
@@ -102,6 +109,11 @@ public class CardSlot : MonoBehaviour, IDropHandler
         currentCard = card;
         card.UpdateParent(this.transform);
         card.MoveToParent();
+    }
+
+    private bool HasCard()
+    {
+        return GetComponentInChildren<Card>() != null;
     }
 
 }

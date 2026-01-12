@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class HeroManager : MonoBehaviour
@@ -7,39 +8,50 @@ public class HeroManager : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void Init() { Instance = null; }
 
-    public int life = 10;
+    public static Action<int, int> OnHealthChanged;
+
+    [Header("Health Settings")]
+    [SerializeField] private int maxHealth = 10;
+    private int currentHealth;
 
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(this.gameObject);
+
+        currentHealth = maxHealth;
+    }
+
+    private void Start()
+    {
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
 
-    public void ReciveDamage(Card card)
+    public void ReciveDamage(int amount)
     {
-        life -= card.GetCardValue();
-
-        if (life <= 0)
+        currentHealth -= amount;
+                
+        if (currentHealth < 0)
         {
-            life = 0;
+            currentHealth = 0;
             Die();
         }
 
-        Destroy(card.gameObject);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
-    public void Heal(Card card)
+    public void Heal(int amount)
     {
-        life += card.GetCardValue();
+        currentHealth += amount;
 
-        if (life > 10)
+        if (currentHealth > maxHealth)
         {
-            life = 10;
+            currentHealth = maxHealth;
         }
 
-        Destroy(card.gameObject);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     private void Die()

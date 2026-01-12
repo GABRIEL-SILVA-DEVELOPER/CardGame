@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 083cd9cbf8fe7c24a8e24c38baaf894f
+guid: ebd178558f524b54db132894f7ca2892
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1466270064577407623
-    second: attackIcon_2_0
+      213: 6551600644837709589
+    second: heartIcon_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: 4
     textureCompression: 1
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: attackIcon_2_0
+      name: heartIcon_2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 13
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 97513181523c6abe0800000000000000
-      internalID: -1466270064577407623
+      spriteID: 51795c91316fbea50800000000000000
+      internalID: 6551600644837709589
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      attackIcon_2_0: -1466270064577407623
+      heartIcon_2_0: 6551600644837709589
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

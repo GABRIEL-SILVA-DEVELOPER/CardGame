@@ -47,5 +47,8 @@ TagManager:
   - name: CardVisual
     uniqueID: 784193221
     locked: 0
+  - name: UI
+    uniqueID: 3313247333
+    locked: 0
   m_RenderingLayers:
   - Default

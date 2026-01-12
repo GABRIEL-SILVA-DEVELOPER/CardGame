@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
@@ -15,27 +16,42 @@ public class CombatManager : MonoBehaviour
     }
 
 
-    public void StartCombate(Card weaponCard, Card monsterCard)
+    public void StartCombat(Card weaponCard, Card monsterCard)
     {
-        int damage = weaponCard.GetCardValue();
-        int monsterHealth = monsterCard.GetCardValue();
+        CardVisual cardVisual = weaponCard.GetCardVisual();
 
-        monsterHealth -= damage;
-
-        if (monsterHealth <= 0)
+        cardVisual.PlayAttackAnimation(monsterCard.transform.position, (dir) =>
         {
-            monsterCard.SetCardValue(0);
-            monsterCard.GetCardVisual().UpdateVisual();
+            TriggerHitStop(0.11f);
 
-            Destroy(monsterCard.gameObject);
-        }
-        else
-        {
-            monsterCard.SetCardValue(monsterHealth);
-            monsterCard.GetCardVisual().UpdateVisual();
-        }
+            int damage = weaponCard.GetCardValue();
+            int monsterHealth = monsterCard.GetCardValue();
 
-        Destroy(weaponCard.gameObject);
+            monsterHealth -= damage;
+
+            if (monsterHealth <= 0)
+            {
+                monsterCard.SetCardValue(0);
+                monsterCard.GetCardVisual().UpdateVisual();
+
+                Destroy(monsterCard.gameObject);
+            }
+            else
+            {
+                monsterCard.SetCardValue(monsterHealth);
+                monsterCard.GetCardVisual().UpdateVisual();
+
+                monsterCard.GetCardVisual().PlayKnockbackAnimation(dir);
+            }
+
+            Destroy(weaponCard.gameObject);
+        });
+    }
+
+    private void TriggerHitStop(float duration)
+    {
+        DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0.05f, 0.01f).SetUpdate(true);
+        DOVirtual.DelayedCall(duration, () => Time.timeScale = 1f).SetUpdate(true);
     }
 
 }

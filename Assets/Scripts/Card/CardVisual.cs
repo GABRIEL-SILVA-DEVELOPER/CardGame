@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -23,7 +24,8 @@ public class CardVisual : MonoBehaviour
     [SerializeField] private Image valueIcon;
     [SerializeField] private Image valueIconShadow;
     [SerializeField] private TextMeshProUGUI valueText;
-    [SerializeField] private GameObject shadowObject; 
+    [SerializeField] private GameObject shadowObject;
+    [SerializeField] private Image flashOverlayImage;
     [Header("Canvas Settings")]
     [SerializeField] private int defaultSortingOrder  = 05;
     [SerializeField] private int draggingSortingOrder = 15;
@@ -127,6 +129,8 @@ public class CardVisual : MonoBehaviour
     }
 
 
+    #region Card Movements
+
     private void SmoothFollow()
     {
         transform.position = Vector3.Lerp(transform.position, cardTransform.position, followSpeed * Time.deltaTime);
@@ -183,6 +187,74 @@ public class CardVisual : MonoBehaviour
         float lerpY = Mathf.LerpAngle(tiltPivot.localEulerAngles.y, targetY, tiltSpeed * Time.deltaTime);
 
         tiltPivot.localEulerAngles = new Vector3(lerpX, lerpY, 0);
+    }
+
+    #endregion
+
+    public void PlayAttackAnimation(Vector2 targetPos, Action<Vector3> onHitCallback)
+    {
+        isInitialize = false;
+
+        Vector2 startPos = transform.position;
+        Vector2 direction = (targetPos - startPos).normalized;
+
+        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+
+        Sequence combatSequence = DOTween.Sequence();
+
+        float distance = 2.5f;
+
+        // Antecipation
+        combatSequence.Append(transform.DORotate(new Vector3(0, 0, targetAngle), 0.2f).SetEase(Ease.OutCubic));
+        combatSequence.Join(transform.DOMove(startPos - (direction * distance), 0.2f));
+
+        // Attack
+        combatSequence.Insert(0.2f, transform.DOPunchScale(new Vector3(0.1f, 0.2f, 0), 0.1f));
+        combatSequence.Append(transform.DOMove(targetPos, 0.15f).SetEase(Ease.InBack))
+            .OnComplete(() => onHitCallback?.Invoke(direction));
+    }
+
+    public void PlayKnockbackAnimation(Vector3 attackDirection)
+    {
+        isInitialize = false;
+        canvas.sortingOrder = draggingSortingOrder;
+
+        TriggerFlash();
+
+        Sequence damageSeq = DOTween.Sequence();
+
+        // Change color
+        damageSeq.Join(mainIcon.DOColor(Color.red, 0.1f).SetLoops(2, LoopType.Yoyo));
+
+        // Knockback
+        float knockbackForce = 1f;
+        Vector3 targetPos = transform.position + (attackDirection * knockbackForce);
+        targetPos.z = 0f;
+
+        damageSeq.Join(transform.DOMove(targetPos, 0.1f));
+
+        // Shake rotation
+        damageSeq.Join(transform.DOShakeRotation(0.3f, new Vector3(0, 0, 20f), 15));
+
+        // Reset
+        damageSeq.OnComplete(() =>
+        {
+            canvas.sortingOrder = defaultSortingOrder;
+
+            isInitialize = true;
+            canvas.sortingOrder = defaultSortingOrder;
+
+            mainIcon.color = Color.white;
+        });
+    }
+    
+    private void TriggerFlash()
+    {
+        if (flashOverlayImage == null) return;
+
+        flashOverlayImage.DOKill();
+        flashOverlayImage.color = new Color(1f, 1f, 1f, 1f);
+        flashOverlayImage.DOFade(0f,0.2f).SetUpdate(true);
     }
 
 }
