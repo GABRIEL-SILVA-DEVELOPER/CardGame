@@ -1,12 +1,19 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CardSlot : MonoBehaviour, IDropHandler
 {
     public enum SlotType { DECK, HAND, BAG, HERO }
     public SlotType type;
  
-    public Card currentCard;
+    [Header("Visuals")]
+    [SerializeField] private Image slotHighlighterImage;
+    [SerializeField] private Color normalColor;
+    [SerializeField] private Color combatColor;
+    [SerializeField] private Color equipmentColor;
+
+    private Card currentCard;
 
 
     private void Start()

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Background
+  m_Name: backgroundMat
   m_Shader: {fileID: -6465566751694194690, guid: 050d8bb8ef880cc4ca7250cf8ba0b99e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

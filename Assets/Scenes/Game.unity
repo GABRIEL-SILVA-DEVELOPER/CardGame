@@ -125,7 +125,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1774353188}
+    m_TransformParent: {fileID: 426316275}
     m_Modifications:
     - target: {fileID: 3017883851379927676, guid: 48c54addfccae0e4cbaea0eabf93cdbb, type: 3}
       propertyPath: m_Enabled
@@ -408,7 +408,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 426316275}
+    m_TransformParent: {fileID: 1774353188}
     m_Modifications:
     - target: {fileID: 4270316510359980963, guid: 48c54addfccae0e4cbaea0eabf93cdbb, type: 3}
       propertyPath: data
@@ -625,7 +625,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7674993887818592813, guid: 78fc7c5fe470e774ca1a717d40132e55, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 378377156}
+      addedObject: {fileID: 44034825}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78fc7c5fe470e774ca1a717d40132e55, type: 3}
 --- !u!224 &426316275 stripped
@@ -1058,7 +1058,7 @@ PrefabInstance:
     - target: {fileID: 4270316510359980963, guid: 48c54addfccae0e4cbaea0eabf93cdbb, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 11400000, guid: 4033c2b3c1a793c48a1aa96b27750060, type: 2}
+      objectReference: {fileID: 11400000, guid: 09ba03aceefcd0f468f1c34bf3f7c629, type: 2}
     - target: {fileID: 4860609786669444470, guid: 48c54addfccae0e4cbaea0eabf93cdbb, type: 3}
       propertyPath: m_Name
       value: Card
@@ -2022,6 +2022,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d171faea96b44c14e8d6fe138f869901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 1746184797}
+  popupTextObject: {fileID: 7096449008945532562, guid: 2c7b229c63757bf438fb930174721bd2, type: 3}
+  cardGhostObject: {fileID: 5692521699108092408, guid: 760e3cc8d9b1bbd469858c04f49ce42a, type: 3}
 --- !u!1001 &1182181951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3097,7 +3100,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7674993887818592813, guid: 78fc7c5fe470e774ca1a717d40132e55, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 44034825}
+      addedObject: {fileID: 378377156}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78fc7c5fe470e774ca1a717d40132e55, type: 3}
 --- !u!224 &1774353188 stripped

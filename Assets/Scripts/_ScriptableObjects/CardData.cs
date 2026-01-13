@@ -16,8 +16,4 @@ public class CardData : ScriptableObject
     [Header("Attributes")]
     public int cardValue;
     public Sprite cardValueIcon;
-
-    [Header("Visual")]
-    public Color themeColor;
-    
 }

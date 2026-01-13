@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FlashHeart
+  m_Name: heartIconMat
   m_Shader: {fileID: -6465566751694194690, guid: 37df591f1cab80243b25c1f81b7a03e8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

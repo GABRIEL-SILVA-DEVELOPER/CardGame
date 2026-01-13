@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Goblin
   description: 
-  mainIcon: {fileID: 21300000, guid: 86141bf0af131d64cb0bec6d2efef684, type: 3}
+  mainIcon: {fileID: 21300000, guid: 5834a7eac16aaee46acbe3074995b226, type: 3}
   type: 0
   buffType: 0
-  cardValue: 8
+  cardValue: 99
   cardValueIcon: {fileID: 21300000, guid: 2879acdf54438d54fad6dc995f8b4765, type: 3}
   themeColor: {r: 1, g: 0, b: 0, a: 0}

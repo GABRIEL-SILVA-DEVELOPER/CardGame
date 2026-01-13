@@ -17,6 +17,6 @@ MonoBehaviour:
   mainIcon: {fileID: 21300000, guid: 747fb3a1be97546469dc3789d00cc3e6, type: 3}
   type: 0
   buffType: 0
-  cardValue: 7
+  cardValue: 99
   cardValueIcon: {fileID: 21300000, guid: 2879acdf54438d54fad6dc995f8b4765, type: 3}
   themeColor: {r: 1, g: 0, b: 0, a: 0}

@@ -29,6 +29,8 @@ public class CardVisual : MonoBehaviour
     [Header("Canvas Settings")]
     [SerializeField] private int defaultSortingOrder  = 05;
     [SerializeField] private int draggingSortingOrder = 15;
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem bloodParticles;
 
     private Canvas canvas;
     private Card parentCard;
@@ -89,6 +91,7 @@ public class CardVisual : MonoBehaviour
         if (shadowObject != null) shadowObject.SetActive(true);
         canvas.sortingOrder = draggingSortingOrder;
 
+        transform.DOKill();
         transform.DOScale(1.2f, 0.2f);
     }
 
@@ -97,21 +100,23 @@ public class CardVisual : MonoBehaviour
         if (shadowObject != null) shadowObject.SetActive(false);
         canvas.sortingOrder = defaultSortingOrder;
 
-        transform.DOScale(1.0f, 0.2f);
+        transform.DOScale(Vector3.one * 1.0f, 0.2f);
     }
 
     private void CardPointerEnter(Card card)
     {
         if (parentCard.IsDragging) return;
 
+        transform.DOKill();
         transform.DOScale(1.1f, 0.2f).SetEase(Ease.OutBack);
     }
 
     private void CardPointerExit(Card card)
     {
+        if (card.IsDragging) return;
+
         transform.DOKill();
         tiltPivot.DOKill();
-
         transform.DOScale(1.0f, 0.2f);
     }
 
@@ -220,6 +225,7 @@ public class CardVisual : MonoBehaviour
         canvas.sortingOrder = draggingSortingOrder;
 
         TriggerFlash();
+        PlayBloodVFX(attackDirection);
 
         Sequence damageSeq = DOTween.Sequence();
 
@@ -254,7 +260,15 @@ public class CardVisual : MonoBehaviour
 
         flashOverlayImage.DOKill();
         flashOverlayImage.color = new Color(1f, 1f, 1f, 1f);
-        flashOverlayImage.DOFade(0f,0.2f).SetUpdate(true);
+        flashOverlayImage.DOFade(0f, 0.2f).SetUpdate(true);
+    }
+
+    private void PlayBloodVFX(Vector3 lookDir)
+    {
+        if (bloodParticles == null) return;
+
+        bloodParticles.transform.rotation = Quaternion.LookRotation(lookDir);
+        bloodParticles.Play();
     }
 
 }

@@ -67,7 +67,7 @@ public class HealthBar : MonoBehaviour
 
             if (currentHealth <= heartsToPulse && i <= heartsToPulse)
             {
-                heartMat.DOFloat(1.0f, flashAmount, 0.2f)
+                heartMat.DOFloat(1.0f, flashAmount, 0.4f)
                     .SetEase(Ease.InOutSine)
                     .SetLoops(-1, LoopType.Yoyo)
                     .SetId(pulseID);
