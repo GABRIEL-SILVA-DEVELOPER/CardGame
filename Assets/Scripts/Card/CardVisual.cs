@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,6 +36,8 @@ public class CardVisual : MonoBehaviour
     private Canvas canvas;
     private Card parentCard;
     private Transform cardTransform;
+
+    private bool waitingForImpact = false;
 
     private bool isInitialize;
 
@@ -133,12 +136,26 @@ public class CardVisual : MonoBehaviour
         UpdateTilt();
     }
 
+    public void UpdateParent(Transform newParent)
+    {
+        transform.SetParent(newParent);
+    }
 
     #region Card Movements
 
     private void SmoothFollow()
     {
         transform.position = Vector3.Lerp(transform.position, cardTransform.position, followSpeed * Time.deltaTime);
+
+        if (waitingForImpact)
+        {
+            float distance = Vector3.Distance(transform.position, cardTransform.position);
+
+            if (distance < 1.5f)
+            {
+                ExecuteImpact();
+            }
+        }
     }
 
     private void SmoothRotation()
@@ -195,6 +212,26 @@ public class CardVisual : MonoBehaviour
     }
 
     #endregion
+
+    private void ExecuteImpact()
+    {
+        waitingForImpact = false;
+
+        transform.DOKill();
+        transform.DOPunchScale(new Vector3(0.2f, -0.2f, 0f), 0.3f).SetUpdate(true);
+
+        CardSlot slot = GetComponentInParent<CardSlot>();
+        if (slot)
+        {
+            slot.PlayImpactEffect();
+        }
+    }
+
+    public void PrepareForImpact()
+    {
+        waitingForImpact = true;
+    }
+
 
     public void PlayAttackAnimation(Vector2 targetPos, Action<Vector3> onHitCallback)
     {

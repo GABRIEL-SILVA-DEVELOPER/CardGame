@@ -142,11 +142,13 @@ public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHan
     public void MoveToParent()
     {
         transform.localPosition = Vector3.zero;
+        if (visual != null) visual.PrepareForImpact();
     }
 
     public void UpdateParent(Transform newParent)
     {
         transform.SetParent(newParent);
+        if (visual != null) visual.UpdateParent(newParent);
 
         OnAnyCardChangeParent?.Invoke(this);
     }
