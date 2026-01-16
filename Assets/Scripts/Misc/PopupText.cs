@@ -80,10 +80,9 @@ public class PopupText : MonoBehaviour
         if (isCritical)
         {
             // Shake
-            popupSeq.Append(transform.DOShakePosition(duration, 20.0f, 50));
+            popupSeq.Append(transform.DOShakePosition(duration * 0.5f, 20.0f, 50));
 
             // Scale
-            // popupSeq.Join(transform.DOScale(Vector3.one * 1.5f, 0.3f).SetEase(Ease.OutBack));
             popupSeq.Join(transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack));
         }
         else

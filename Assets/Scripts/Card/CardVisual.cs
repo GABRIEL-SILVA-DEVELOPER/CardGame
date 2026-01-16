@@ -1,6 +1,5 @@
 using System;
 using DG.Tweening;
-using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,6 +36,7 @@ public class CardVisual : MonoBehaviour
 
     private Card parentCard;
     private Transform cardTransform;
+    public Card GetParentCard => parentCard;
 
     private bool waitingForImpact = false;
     private bool isInitialize;
@@ -175,7 +175,7 @@ public class CardVisual : MonoBehaviour
     {
         if (parentCard.IsDragging && shadowObject != null)
         {
-            float shadowOffset = 0.7f;
+            float shadowOffset = 0.5f;
             shadowObject.transform.localPosition = 
                 new Vector3(rotationDelta.x * shadowOffset, (rotationDelta.y - 20.0f) * shadowOffset, 0.0f);
         }
@@ -213,6 +213,15 @@ public class CardVisual : MonoBehaviour
 
     #endregion
 
+
+    #region Visual Effects
+
+    // Called when Card.cs moves to your parent  
+    public void PrepareForImpact()
+    {
+        waitingForImpact = true;
+    }
+
     private void ExecuteImpact()
     {
         waitingForImpact = false;
@@ -226,12 +235,6 @@ public class CardVisual : MonoBehaviour
             slot.PlayImpactEffect();
         }
     }
-
-    public void PrepareForImpact()
-    {
-        waitingForImpact = true;
-    }
-
 
     public void PlayAttackAnimation(Vector2 targetPos, Action<Vector3> onHitCallback)
     {
@@ -307,5 +310,25 @@ public class CardVisual : MonoBehaviour
         bloodParticles.transform.rotation = Quaternion.LookRotation(lookDir);
         bloodParticles.Play();
     }
+
+    public void RotateAndDecrease(Transform newTransform, Action<Card> OnAnimationComplete, Card card)
+    {
+        isInitialize = false;
+        transform.DOKill();
+
+        Sequence consumeSequence = DOTween.Sequence();
+        float duration = 0.4f;
+
+        consumeSequence.Append(transform.DOMove(newTransform.position, duration).SetEase(Ease.OutQuad));
+        consumeSequence.Join(transform.DORotate(new Vector3(0, 0, 720), duration, RotateMode.FastBeyond360).SetEase(Ease.InCubic));
+        consumeSequence.Join(transform.DOScale(Vector3.zero, duration).SetEase(Ease.InBack));
+        consumeSequence.OnComplete(() =>
+        {
+            OnAnimationComplete(card);
+            Destroy(parentCard.gameObject);
+        });
+    }
+
+    #endregion
 
 }

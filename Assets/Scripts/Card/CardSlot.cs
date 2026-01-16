@@ -122,21 +122,13 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         }
         else if (type == SlotType.HERO)
         {
-            if (card.Data.type == CardData.CardType.MONSTER)
+            HeroSlot heroSlot = GetComponent<HeroSlot>();
+
+            if (card.Data.type == CardData.CardType.MONSTER || card.Data.buffType == CardData.BuffType.HEAL)
             {
-                HeroManager.Instance.ReciveDamage(card.GetCardValue());
-                Destroy(card.gameObject);
-            }
-            else if (card.Data.type == CardData.CardType.BUFF)
-            {
-                if (card.Data.buffType == CardData.BuffType.HEAL)
-                {
-                    HeroManager.Instance.Heal(card.GetCardValue());
-                    Destroy(card.gameObject);
-                }
+                card.GetCardVisual().RotateAndDecrease(transform, heroSlot.ConsumeCardEffect, card);
             }
         }
-
     }
 
     private void PlaceInSlot(Card card)
@@ -216,7 +208,7 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         highlightObject.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack).SetUpdate(true);
 
         // Pulse animation
-        pulseTween = highlightImage.DOFade(0.5f, 0.3f)
+        pulseTween = highlightImage.DOFade(0.75f, 0.5f)
             .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.InOutSine)
             .SetUpdate(true);

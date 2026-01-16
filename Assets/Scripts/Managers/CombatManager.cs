@@ -1,13 +1,12 @@
 using DG.Tweening;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance { get; private set; }
-
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void Init() { Instance = null; }
+
     [Header("Game Canvas")]
     [SerializeField] private Canvas canvas;
     [Header("Popup")]
@@ -29,7 +28,7 @@ public class CombatManager : MonoBehaviour
 
         cardVisual.PlayAttackAnimation(monsterCard.transform.position, (dir) =>
         {
-            TriggerHitStop(0.1f);
+            GameFeel.TriggerHitStop(0.1f);
 
             int damage = weaponCard.GetCardValue();
             int monsterHealth = monsterCard.GetCardValue();
@@ -55,12 +54,6 @@ public class CombatManager : MonoBehaviour
 
             Destroy(weaponCard.gameObject);
         });
-    }
-
-    private void TriggerHitStop(float duration)
-    {
-        DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0.05f, 0.01f).SetUpdate(true);
-        DOVirtual.DelayedCall(duration, () => Time.timeScale = 1f).SetUpdate(true);
     }
 
     private void SpawnDeathGhost(Card deadCard, Vector3 direction)

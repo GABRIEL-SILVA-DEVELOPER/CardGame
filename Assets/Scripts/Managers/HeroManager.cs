@@ -4,11 +4,14 @@ using UnityEngine;
 public class HeroManager : MonoBehaviour
 {
     public static HeroManager Instance { get; private set; }
-
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void Init() { Instance = null; }
 
+
     public static Action<int, int> OnHealthChanged;
+
+    public int GetMaxHealth => maxHealth;
+    public int GetCurrentHealth => currentHealth;
 
     [Header("Health Settings")]
     [SerializeField] private int maxHealth = 10;

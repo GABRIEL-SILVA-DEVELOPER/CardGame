@@ -11,6 +11,7 @@ public class MoveIconAndShadow : MonoBehaviour
     [SerializeField] private float minBobSpeed = 2.0f;
     [SerializeField] private float maxBobSpeed = 3.0f;
     [SerializeField] private float minShadowScale = 0.5f;
+    [SerializeField] private float maxShadowAlpha = 0.5f;
     [SerializeField] private float minShadowAlpha = 0.2f;
 
     private float bobSpeed;
@@ -48,7 +49,7 @@ public class MoveIconAndShadow : MonoBehaviour
         shadowImage.transform.localScale = initialShadowScale * scaleMultiplier;
 
         Color shadowColor = shadowImage.color;
-        shadowColor.a = Mathf.Lerp(0.5f, minShadowAlpha, (sinValue + 1f) / 2f);
+        shadowColor.a = Mathf.Lerp(maxShadowAlpha, minShadowAlpha, (sinValue + 1f) / 2f);
         shadowImage.color = shadowColor;
     }
 
