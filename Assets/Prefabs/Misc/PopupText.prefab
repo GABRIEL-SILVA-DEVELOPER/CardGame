@@ -65,7 +65,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TEXT
+  m_text: 'TEXT
+
+    TEXT'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be94d63fa50da494a9b302bb5846516f, type: 2}
   m_sharedMaterial: {fileID: 3644422541790713732, guid: be94d63fa50da494a9b302bb5846516f, type: 2}
@@ -105,7 +107,7 @@ MonoBehaviour:
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -25
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0

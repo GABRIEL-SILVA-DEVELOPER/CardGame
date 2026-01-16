@@ -36,7 +36,15 @@ public class PopupText : MonoBehaviour
             prefix = "+";
         }
 
-        popupText.text = $"{prefix}{valueText}";
+        // Original
+        // popupText.text = $"{prefix}{valueText}";
+
+        // TEST
+        if (isCritical)
+            popupText.text = $"{prefix}{valueText}";
+        else
+            popupText.text = $"{prefix}{valueText}";
+
 
         PlayFadeAnimation(isCritical);
     }
@@ -67,18 +75,20 @@ public class PopupText : MonoBehaviour
         Sequence popupSeq = DOTween.Sequence().SetUpdate(true);
 
         transform.localScale = Vector3.zero;
-        float duration = 0.7f;
+        float duration = 1.0f;
 
         if (isCritical)
         {
             // Shake
-            popupSeq.Append(transform.DOShakePosition(duration, 20.0f, 20));
+            popupSeq.Append(transform.DOShakePosition(duration, 20.0f, 50));
 
             // Scale
-            popupSeq.Join(transform.DOScale(Vector3.one * 1.5f, 0.3f).SetEase(Ease.OutBack));
+            // popupSeq.Join(transform.DOScale(Vector3.one * 1.5f, 0.3f).SetEase(Ease.OutBack));
+            popupSeq.Join(transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack));
         }
         else
         {
+            // Scale
             popupSeq.Append(transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack));
         }
 

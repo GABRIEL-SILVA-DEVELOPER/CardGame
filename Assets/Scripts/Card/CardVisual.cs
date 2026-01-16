@@ -34,11 +34,11 @@ public class CardVisual : MonoBehaviour
     [SerializeField] private ParticleSystem bloodParticles;
 
     private Canvas canvas;
+
     private Card parentCard;
     private Transform cardTransform;
 
     private bool waitingForImpact = false;
-
     private bool isInitialize;
 
 

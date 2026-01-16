@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -34,9 +35,8 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         if (initialCard != null) currentCard = initialCard;
 
         if (highlightObject == null) Debug.LogError("The visual highlight is not configured in CardSlot.cs");
-
-        highlightObject.SetActive(false);
         highlightImage = highlightObject.GetComponent<Image>();
+        highlightObject.SetActive(false);
     }
 
     private void OnDisable()

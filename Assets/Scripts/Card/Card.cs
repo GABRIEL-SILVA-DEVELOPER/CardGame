@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Events")]
+    [HideInInspector] public static Action<CardVisual> OnBeginDragGlobal;
+    [HideInInspector] public static Action OnEndDragGlobal;
     [HideInInspector] public static Action<Card> OnAnyCardChangeParent;
     [HideInInspector] public static Action<Card> OnAnyCardDestroyed;
     [HideInInspector] public UnityEvent<Card> PointerEnterEvent;
@@ -69,6 +71,7 @@ public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHan
         imageComponent.raycastTarget = false;
 
         BeginDragEvent?.Invoke(this);
+        OnBeginDragGlobal?.Invoke(visual);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -89,6 +92,7 @@ public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHan
         imageComponent.raycastTarget = true;
 
         EndDragEvent?.Invoke(this);
+        OnEndDragGlobal?.Invoke();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
