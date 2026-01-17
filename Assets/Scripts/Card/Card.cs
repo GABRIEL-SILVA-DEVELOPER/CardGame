@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -17,7 +18,7 @@ public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHan
     [HideInInspector] public UnityEvent<Card> BeginDragEvent;
     [HideInInspector] public UnityEvent<Card> EndDragEvent;
     [Header("Card Data Settings")]
-    [SerializeField] private CardData data;
+    [SerializeField] private CardData_SO data;
     private int cardValue;
     [Header("Clamp Settings")]
     [SerializeField] private float horizontalPadding = 0.5f;
@@ -33,6 +34,8 @@ public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHan
     private bool isHovering;
     private bool isDragging;
 
+    private List<TrinketInstance> trinketsList = new();
+
 
     private void Awake()
     {
@@ -40,12 +43,28 @@ public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHan
         canvas = GetComponentInParent<Canvas>();
 
         if (data != null) cardValue = data.cardValue;
-    }
+        else Debug.LogError("Card.cs without CardData_SO");
+    } 
 
     private void Start()
     {
+        InitializeTrinkets();
+
         visual = Instantiate(cardVisualPrefab, transform.parent);
         visual.Initialize(this);
+        visual.UpdateTrinketVisual(trinketsList);
+    }
+
+    private void InitializeTrinkets()
+    {
+        foreach(var config in data.possibleTrinkets)
+        {
+            if (UnityEngine.Random.value > config.spawnChance) continue;
+
+            float finalPower = UnityEngine.Random.Range(config.minPower, config.maxPower);
+            
+            trinketsList.Add(new TrinketInstance(config.trinket, finalPower));
+        }
     }
 
     private void OnDestroy()
@@ -157,7 +176,7 @@ public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHan
         OnAnyCardChangeParent?.Invoke(this);
     }
 
-    public CardVisual GetCardVisual()
+    public CardVisual GetCardVisual() 
     {
         return visual;
     }
@@ -177,7 +196,7 @@ public class Card : MonoBehaviour , IDragHandler, IBeginDragHandler, IEndDragHan
         return transform.parent;
     }
 
-    public CardData Data => data;
+    public CardData_SO Data => data;
 
     public bool IsDragging => isDragging;
 

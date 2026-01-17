@@ -100,19 +100,19 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
         if (type == SlotType.BAG && currentCard == null)
         {
-            if (card.Data.type == CardData.CardType.MONSTER) return;
+            if (card.Data.type == CardData_SO.CardType.MONSTER) return;
             
             PlaceInSlot(card);
         }
         else if (type == SlotType.HAND && currentCard == null)
         {
-            if (card.Data.type != CardData.CardType.WEAPON) return;
+            if (card.Data.type != CardData_SO.CardType.WEAPON) return;
 
             PlaceInSlot(card);
         }
         else if (type == SlotType.DECK && currentCard != null)
         {
-            if (currentCard.Data.type == CardData.CardType.MONSTER && card.Data.type == CardData.CardType.WEAPON)
+            if (currentCard.Data.type == CardData_SO.CardType.MONSTER && card.Data.type == CardData_SO.CardType.WEAPON)
             {
                 CombatManager.Instance.StartCombat(card, currentCard);
             }
@@ -121,7 +121,7 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         {
             HeroSlot heroSlot = GetComponent<HeroSlot>();
 
-            if (card.Data.type == CardData.CardType.MONSTER || card.Data.buffType == CardData.BuffType.HEAL)
+            if (card.Data.type == CardData_SO.CardType.MONSTER || card.Data.buffType == CardData_SO.BuffType.HEAL)
             {
                 card.GetCardVisual().RotateAndDecrease(transform, heroSlot.ConsumeCardEffect, card);
             }
@@ -137,8 +137,8 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
     private bool IsValidMove(Card dragCard)
     {
-        CardData.CardType incomingType = dragCard.Data.type;
-        CardData.BuffType incomingBuffType = dragCard.Data.buffType;
+        CardData_SO.CardType incomingType = dragCard.Data.type;
+        CardData_SO.BuffType incomingBuffType = dragCard.Data.buffType;
 
         if (type == SlotType.BAG)
             return IsStoreInBagSituation(incomingType) || IsWeaponBuffSituation(incomingType, incomingBuffType);
@@ -157,36 +157,36 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
     #region Validations
 
-    private bool IsCombatSituation(CardData.CardType incomingType)
+    private bool IsCombatSituation(CardData_SO.CardType incomingType)
     {
-        return hasCard && currentCard.Data.type == CardData.CardType.MONSTER && 
-            incomingType == CardData.CardType.WEAPON;
+        return hasCard && currentCard.Data.type == CardData_SO.CardType.MONSTER && 
+            incomingType == CardData_SO.CardType.WEAPON;
     }
     
-    private bool IsWeaponBuffSituation(CardData.CardType incomingType, CardData.BuffType incomingBuffType)
+    private bool IsWeaponBuffSituation(CardData_SO.CardType incomingType, CardData_SO.BuffType incomingBuffType)
     {
-        return hasCard && currentCard.Data.type == CardData.CardType.WEAPON &&  
-            incomingType == CardData.CardType.BUFF && incomingBuffType == CardData.BuffType.WEAPON_BUFF;
+        return hasCard && currentCard.Data.type == CardData_SO.CardType.WEAPON &&  
+            incomingType == CardData_SO.CardType.BUFF && incomingBuffType == CardData_SO.BuffType.WEAPON_BUFF;
     }
 
-    private bool IsEquipWeaponSituation(CardData.CardType incomingType)
+    private bool IsEquipWeaponSituation(CardData_SO.CardType incomingType)
     {
-        return !hasCard && incomingType == CardData.CardType.WEAPON;
+        return !hasCard && incomingType == CardData_SO.CardType.WEAPON;
     }
 
-    private bool IsStoreInBagSituation(CardData.CardType incomingType)
+    private bool IsStoreInBagSituation(CardData_SO.CardType incomingType)
     {
-        return !hasCard && incomingType != CardData.CardType.MONSTER;
+        return !hasCard && incomingType != CardData_SO.CardType.MONSTER;
     }
     
-    private bool IsHeroUnderAttackSituation(CardData.CardType incomingType)
+    private bool IsHeroUnderAttackSituation(CardData_SO.CardType incomingType)
     {
-        return incomingType == CardData.CardType.MONSTER;
+        return incomingType == CardData_SO.CardType.MONSTER;
     }
 
-    private bool IsHeroUnderHealSituation(CardData.CardType incomingType, CardData.BuffType incomingBuffType)
+    private bool IsHeroUnderHealSituation(CardData_SO.CardType incomingType, CardData_SO.BuffType incomingBuffType)
     {
-        return incomingType == CardData.CardType.BUFF && incomingBuffType == CardData.BuffType.HEAL;
+        return incomingType == CardData_SO.CardType.BUFF && incomingBuffType == CardData_SO.BuffType.HEAL;
     }
 
     #endregion
@@ -219,8 +219,8 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
     private Color GetTargetHighlightColor(Card dragCard)
     {
-        CardData.CardType incomingType = dragCard.Data.type;
-        CardData.BuffType incomingBuffType = dragCard.Data.buffType;
+        CardData_SO.CardType incomingType = dragCard.Data.type;
+        CardData_SO.BuffType incomingBuffType = dragCard.Data.buffType;
 
         if (type == SlotType.BAG)
         {

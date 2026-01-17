@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -31,6 +32,9 @@ public class CardVisual : MonoBehaviour
     [SerializeField] private int draggingSortingOrder = 15;
     [Header("VFX")]
     [SerializeField] private ParticleSystem bloodParticles;
+    [Header("Trinket Visual Settings")]
+    [SerializeField] private Transform trinketContainer;
+    [SerializeField] private GameObject trinketIconPrefab;
 
     private Canvas canvas;
 
@@ -85,6 +89,24 @@ public class CardVisual : MonoBehaviour
         valueIcon.sprite = parentCard.Data.cardValueIcon;
         valueIconShadow.sprite = valueIcon.sprite;
         valueText.text = parentCard.GetCardValue().ToString();
+    }
+
+    public void UpdateTrinketVisual(List<TrinketInstance> trinkets)
+    {
+        if (trinketContainer.transform.childCount > 0)
+        {
+            foreach (Transform child in trinketContainer) Destroy(child.gameObject);
+        }
+
+        trinketContainer.gameObject.SetActive(trinkets.Count > 0);
+
+        foreach(var instance in trinkets)
+        {
+            GameObject iconObj = Instantiate(trinketIconPrefab, trinketContainer);
+            Image trinketVisual = iconObj.GetComponent<Image>();
+
+            trinketVisual.sprite = instance.source.icon;
+        }
     }
 
     #region Event Handler

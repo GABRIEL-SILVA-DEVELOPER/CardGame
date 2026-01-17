@@ -2,9 +2,9 @@ using DG.Tweening;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class GameFeel : MonoBehaviour
+public class GameFeelManager : MonoBehaviour
 {
-    public static GameFeel Instance { get; private set; }
+    public static GameFeelManager Instance { get; private set; }
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void Init() { Instance = null; }
 

@@ -19,3 +19,8 @@ MonoBehaviour:
   buffType: 1
   cardValue: 5
   cardValueIcon: {fileID: 21300000, guid: daa49a1f06460a04b9827dd6f0bace08, type: 3}
+  possibleTrinkets:
+  - trinket: {fileID: 11400000, guid: caa5a0834ea8f2440b37002f85fd0902, type: 2}
+    spawnChance: 0.4
+    minPower: 3
+    maxPower: 5

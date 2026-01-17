@@ -25,9 +25,9 @@ public class CombatManager : MonoBehaviour
 
             bool isCrit = IsCrit(weaponCard);
             
-            GameFeel.Instance.TriggerHitStop(isCrit ? 0.2f : 0.1f);
-            GameFeel.Instance.TriggerScreenShake(isCrit ? 0.8f : 0.2f, dir);
-            GameFeel.Instance.SpawnPopupText(monsterCard.transform.position, damage, PopupText.PrefixType.MINUS, Color.red, 70, isCrit);
+            GameFeelManager.Instance.TriggerHitStop(isCrit ? 0.2f : 0.1f);
+            GameFeelManager.Instance.TriggerScreenShake(isCrit ? 0.8f : 0.2f, dir);
+            GameFeelManager.Instance.SpawnPopupText(monsterCard.transform.position, damage, PopupText.PrefixType.MINUS, Color.red, 70, isCrit);
 
             monsterHealth -= damage;
 
@@ -36,7 +36,7 @@ public class CombatManager : MonoBehaviour
                 monsterCard.SetCardValue(0);
                 monsterCard.GetCardVisual().UpdateVisual();
                 
-                GameFeel.Instance.SpawnDeathGhost(monsterCard, dir);
+                GameFeelManager.Instance.SpawnDeathGhost(monsterCard, dir);
             }
             else
             {

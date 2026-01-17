@@ -57,9 +57,9 @@ public class HeroSlot : MonoBehaviour
         ApplyMagneticEffect();
     }
 
-    private bool IsValidMoment(CardData cardData)
+    private bool IsValidMoment(CardData_SO cardData)
     {
-        bool correctType = cardData.type == CardData.CardType.BUFF && cardData.buffType == CardData.BuffType.HEAL;
+        bool correctType = cardData.type == CardData_SO.CardType.BUFF && cardData.buffType == CardData_SO.BuffType.HEAL;
         bool heroNeedLife = HeroManager.Instance.GetCurrentHealth < HeroManager.Instance.GetMaxHealth;
 
         return correctType && heroNeedLife;
@@ -84,16 +84,16 @@ public class HeroSlot : MonoBehaviour
 
     public void ConsumeCardEffect(Card card)
     {
-        bool isPositive = card.Data.buffType == CardData.BuffType.HEAL ? true : false;
+        bool isPositive = card.Data.buffType == CardData_SO.BuffType.HEAL ? true : false;
         
         // Text popup
         Color popupColor = isPositive ? Color.green : Color.red;
         PopupText.PrefixType prefix = isPositive ? PopupText.PrefixType.PLUS : PopupText.PrefixType.MINUS;
-        GameFeel.Instance.SpawnPopupText(transform.position, card.GetCardValue(), prefix, popupColor, 80, false);
+        GameFeelManager.Instance.SpawnPopupText(transform.position, card.GetCardValue(), prefix, popupColor, 80, false);
         // Particles
-        GameFeel.Instance.SpawnParticles(transform.position, isPositive);
+        GameFeelManager.Instance.SpawnParticles(transform.position, isPositive);
         // Hit stop
-        GameFeel.Instance.TriggerHitStop(0.05f);
+        GameFeelManager.Instance.TriggerHitStop(0.05f);
 
 
         // Icon visual feedback 
@@ -108,7 +108,7 @@ public class HeroSlot : MonoBehaviour
     {
         HeroManager.Instance.Heal(value);
 
-        GameFeel.Instance.TriggerScreenShake(0.2f, Vector3.up);
+        GameFeelManager.Instance.TriggerScreenShake(0.2f, Vector3.up);
 
         transform.DOKill();
         Sequence buffSeq = DOTween.Sequence().SetUpdate(true);
@@ -122,7 +122,7 @@ public class HeroSlot : MonoBehaviour
     {
         HeroManager.Instance.ReciveDamage(value);
 
-        GameFeel.Instance.TriggerScreenShake(0.3f, Vector3.down);
+        GameFeelManager.Instance.TriggerScreenShake(0.3f, Vector3.down);
 
         transform.DOKill();
         Sequence debuffSeq = DOTween.Sequence().SetUpdate(true);
