@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
@@ -21,24 +20,14 @@ public class CombatManager : MonoBehaviour
 
         cardVisual.PlayAttackAnimation(monsterCard.transform.position, (dir) =>
         {
-            GameFeel.Instance.TriggerHitStop(0.1f);
-
             int damage = weaponCard.GetCardValue();
             int monsterHealth = monsterCard.GetCardValue();
 
-            // TEST ==============================================
-            bool isCrit = damage > 15 ? true : false;
-            // TEST ==============================================
+            bool isCrit = IsCrit(weaponCard);
             
-            GameFeel.Instance.SpawnPopupText
-            (
-                monsterCard.transform.position, 
-                damage, 
-                PopupText.PrefixType.MINUS, 
-                Color.red, 
-                70, 
-                isCrit
-            );
+            GameFeel.Instance.TriggerHitStop(isCrit ? 0.2f : 0.1f);
+            GameFeel.Instance.TriggerScreenShake(isCrit ? 0.8f : 0.2f, dir);
+            GameFeel.Instance.SpawnPopupText(monsterCard.transform.position, damage, PopupText.PrefixType.MINUS, Color.red, 70, isCrit);
 
             monsterHealth -= damage;
 
@@ -59,6 +48,14 @@ public class CombatManager : MonoBehaviour
 
             Destroy(weaponCard.gameObject);
         });
+    }
+
+    private bool IsCrit(Card card)
+    {
+        // TEST ==========================================
+        int damage = card.GetCardValue();
+        return damage > 15 ? true : false;
+        // TEST ==========================================
     }
 
 }

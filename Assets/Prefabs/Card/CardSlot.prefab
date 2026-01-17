@@ -85,7 +85,7 @@ MonoBehaviour:
   bobIntensity: 1
   minBobSpeed: 1
   maxBobSpeed: 2
-  minShadowScale: 0.8
+  minShadowScale: 0.9
   maxShadowAlpha: 0.7
   minShadowAlpha: 0.5
 --- !u!1 &2423031774423920435

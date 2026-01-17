@@ -111,7 +111,7 @@ public class CardVisual : MonoBehaviour
         if (parentCard.IsDragging) return;
 
         transform.DOKill();
-        transform.DOScale(1.1f, 0.2f).SetEase(Ease.OutBack);
+        transform.DOScale(1.15f, 0.15f).SetEase(Ease.OutBack).SetUpdate(true);
     }
 
     private void CardPointerExit(Card card)
@@ -120,7 +120,7 @@ public class CardVisual : MonoBehaviour
 
         transform.DOKill();
         tiltPivot.DOKill();
-        transform.DOScale(1.0f, 0.2f);
+        transform.DOScale(Vector3.one, 0.15f).SetUpdate(true);
     }
 
     #endregion
@@ -150,8 +150,9 @@ public class CardVisual : MonoBehaviour
         if (waitingForImpact)
         {
             float distance = Vector3.Distance(transform.position, cardTransform.position);
+            float distanceToActive = 0.5f;
 
-            if (distance < 1.5f)
+            if (distance <= distanceToActive)
             {
                 ExecuteImpact();
             }
@@ -226,14 +227,14 @@ public class CardVisual : MonoBehaviour
     {
         waitingForImpact = false;
 
-        transform.DOKill();
-        transform.DOPunchScale(new Vector3(0.2f, -0.2f, 0f), 0.3f).SetUpdate(true);
-
         CardSlot slot = GetComponentInParent<CardSlot>();
         if (slot)
         {
             slot.PlayImpactEffect();
         }
+
+        // transform.DOKill();
+        transform.DOPunchScale(new Vector3(0.2f, -0.2f, 0f), 0.1f).SetUpdate(true);
     }
 
     public void PlayAttackAnimation(Vector2 targetPos, Action<Vector3> onHitCallback)

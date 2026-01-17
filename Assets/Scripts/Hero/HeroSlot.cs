@@ -108,10 +108,13 @@ public class HeroSlot : MonoBehaviour
     {
         HeroManager.Instance.Heal(value);
 
+        GameFeel.Instance.TriggerScreenShake(0.2f, Vector3.up);
+
         transform.DOKill();
         Sequence buffSeq = DOTween.Sequence().SetUpdate(true);
-        
+        // Scale up
         buffSeq.Append(transform.DOScale(Vector3.one * 1.3f, 0.05f).SetEase(Ease.OutQuad));
+        // Reset
         buffSeq.Append(transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutElastic));
     }
 
@@ -119,10 +122,10 @@ public class HeroSlot : MonoBehaviour
     {
         HeroManager.Instance.ReciveDamage(value);
 
+        GameFeel.Instance.TriggerScreenShake(0.3f, Vector3.down);
+
         transform.DOKill();
-
         Sequence debuffSeq = DOTween.Sequence().SetUpdate(true);
-
         Vector3 originalPos = transform.localPosition;
         // Squash
         debuffSeq.Append(transform.DOLocalMoveY(originalPos.y - 80f, 0.05f).SetEase(Ease.OutQuad));

@@ -73,14 +73,14 @@ Material:
     m_Floats:
     - _Birghtness: 0.5
     - _EnableExternalAlpha: 0
-    - _Frequency: 100
+    - _Frequency: 70
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RotationSpeed: -10
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _HoloColor: {r: 1, g: 0, b: 0.95696926, a: 0}
+    - _HoloColor: {r: 0.27450982, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _Rotation: {r: -3, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

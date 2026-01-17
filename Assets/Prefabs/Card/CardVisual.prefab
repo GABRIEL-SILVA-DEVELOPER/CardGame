@@ -498,7 +498,7 @@ MonoBehaviour:
   followSpeed: 40
   rotationAmount: 45
   rotationSpeed: 45
-  autoTiltAmount: 10
+  autoTiltAmount: 0
   manualTiltAmount: 25
   tiltSpeed: 20
   tiltPivot: {fileID: 2642848281885682167}
@@ -770,7 +770,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82555773660424174, guid: 9ab37d28b671fb14182e7b1f5a8e0344, type: 3}
       propertyPath: m_SortingLayer
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6688774339266353944, guid: 9ab37d28b671fb14182e7b1f5a8e0344, type: 3}
       propertyPath: m_Pivot.x

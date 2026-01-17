@@ -248,7 +248,7 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
     public void PlayImpactEffect()
     {
-        transform.DOKill();
+        // transform.DOKill();
         transform.DOPunchScale(new Vector3(0.15f, 0.15f, 0f), 0.15f).SetUpdate(true);
     }
 

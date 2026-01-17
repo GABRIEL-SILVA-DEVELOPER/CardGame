@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class GameFeel : MonoBehaviour
@@ -7,7 +8,8 @@ public class GameFeel : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void Init() { Instance = null; }
 
-
+    [Header("Cinemachine Impulse Source")]
+    [SerializeField] private CinemachineImpulseSource impulseSource;
     [Header("Game Canvas")]
     [SerializeField] private Canvas canvas;
     [Header("Popup")]
@@ -29,6 +31,7 @@ public class GameFeel : MonoBehaviour
             Instance = this;
         }
 
+        if (impulseSource == null) GetComponent<CinemachineImpulseSource>();
     }
 
 
@@ -86,6 +89,20 @@ public class GameFeel : MonoBehaviour
 
         GameObject healObj = Instantiate(prefabVFX, canvas.transform);
         healObj.transform.position = spawnPos;
+    }
+
+    public void TriggerScreenShake(float force = 0.1f, Vector3? direction = null)
+    {
+        if (impulseSource == null) return;
+        
+        if (direction.HasValue)
+        {
+            impulseSource.GenerateImpulse(direction.Value * force);
+        }
+        else
+        {
+           impulseSource.GenerateImpulseWithForce(force); 
+        }
     }
 
 }
