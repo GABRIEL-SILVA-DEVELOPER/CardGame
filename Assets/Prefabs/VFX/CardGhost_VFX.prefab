@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 7874744534912384457}
   - component: {fileID: 3849890810911653364}
   m_Layer: 5
-  m_Name: CardGhost
+  m_Name: CardGhost_VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,7 +427,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 784193221
+  m_SortingLayerID: -624123451
   m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &3849890810911653364

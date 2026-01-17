@@ -47,6 +47,9 @@ TagManager:
   - name: CardVisual
     uniqueID: 784193221
     locked: 0
+  - name: VFX
+    uniqueID: 3670843845
+    locked: 0
   - name: UI
     uniqueID: 3313247333
     locked: 0

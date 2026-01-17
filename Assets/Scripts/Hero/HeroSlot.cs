@@ -86,19 +86,22 @@ public class HeroSlot : MonoBehaviour
     {
         bool isPositive = card.Data.buffType == CardData.BuffType.HEAL ? true : false;
         
-        Color flashColor = isPositive ? Color.green : Color.red;
-        heroIcon.DOColor(flashColor, 0.1f).SetLoops(2, LoopType.Yoyo);
+        // Text popup
+        Color popupColor = isPositive ? Color.green : Color.red;
+        PopupText.PrefixType prefix = isPositive ? PopupText.PrefixType.PLUS : PopupText.PrefixType.MINUS;
+        GameFeel.Instance.SpawnPopupText(transform.position, card.GetCardValue(), prefix, popupColor, 80, false);
+        // Particles
+        GameFeel.Instance.SpawnParticles(transform.position, isPositive);
+        // Hit stop
+        GameFeel.Instance.TriggerHitStop(0.05f);
 
-        GameFeel.TriggerHitStop(0.1f);
 
-        if (isPositive)
-        {
-            PlayBuffAnim(card.GetCardValue());
-        }
-        else
-        {
-            PlayDebuffAnim(card.GetCardValue());
-        }
+        // Icon visual feedback 
+        heroIcon.DOColor(isPositive ? Color.green : Color.red, 0.1f).SetLoops(2, LoopType.Yoyo);
+
+        // Transform animations
+        if (isPositive) PlayBuffAnim(card.GetCardValue());
+        else PlayDebuffAnim(card.GetCardValue());
     }
 
     private void PlayBuffAnim(int value)

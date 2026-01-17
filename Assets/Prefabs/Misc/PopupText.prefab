@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupText: {fileID: 7393366658544629937}
-  layerName: UI
+  layerName: VFX
   canvasGroup: {fileID: 6117715268184517475}
   canvas: {fileID: 2985359193134307679}
 --- !u!223 &2985359193134307679

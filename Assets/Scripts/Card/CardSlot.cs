@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,6 +11,7 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
     [Header("Visual Feedback")]
     [SerializeField] private GameObject highlightObject;
     [SerializeField] private Canvas highlightCanvas;
+    [SerializeField] private string UILayerName;
     [SerializeField] private Color normalColor;
     [SerializeField] private Color combatColor;
     [SerializeField] private Color buffColor;
@@ -21,9 +21,6 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
     private Card currentCard;
 
     private bool hasCard => currentCard != null;
-    private bool getCard => GetComponentInChildren<Card>();
-
-    private Tween pulseTween;
 
 
     private void Start()
@@ -198,27 +195,22 @@ public class CardSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
     {
         highlightObject.SetActive(true);
         highlightImage.color = targetColor;
-        if (highlightCanvas != null) highlightCanvas.sortingOrder = 100;
+        
+        if (highlightCanvas != null)
+        {
+            highlightCanvas.overrideSorting = true;
+            highlightCanvas.sortingOrder = 99;
+        }
 
         highlightImage.transform.DOKill();
-        if (pulseTween != null) pulseTween.Kill();
 
         // Pop
         highlightObject.transform.localScale = Vector3.one * 0.5f;
         highlightObject.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack).SetUpdate(true);
-
-        // Pulse animation
-        pulseTween = highlightImage.DOFade(0.75f, 0.5f)
-            .SetLoops(-1, LoopType.Yoyo)
-            .SetEase(Ease.InOutSine)
-            .SetUpdate(true);
     }
 
     private void HideHighlight()
     {
-        if (pulseTween != null) pulseTween.Kill();
-        if (highlightCanvas != null) highlightCanvas.sortingOrder = 0;
-
         // Fade out
         highlightImage.transform.DOScale(Vector3.zero, 0.25f).SetEase(Ease.InBack)
             .OnComplete(() => highlightObject.SetActive(false))

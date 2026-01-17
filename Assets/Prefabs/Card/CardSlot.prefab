@@ -63,10 +63,11 @@ MonoBehaviour:
   type: 1
   highlightObject: {fileID: 4236878193502461417}
   highlightCanvas: {fileID: 2380815506460923444}
+  UILayerName: UI
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   combatColor: {r: 1, g: 0, b: 0, a: 1}
   buffColor: {r: 0, g: 1, b: 0.023555994, a: 1}
-  equipWeaponColor: {r: 1, g: 0.78431374, b: 0, a: 1}
+  equipWeaponColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &3290644608726746580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,16 +75,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888260881218879666}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f974b238c14a304485c94a504ba1386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 5726242879570217120}
   shadowImage: {fileID: 7403942474407427448}
-  bobIntensity: 2
-  minBobSpeed: 2
-  maxBobSpeed: 2.5
+  bobIntensity: 1
+  minBobSpeed: 1
+  maxBobSpeed: 2
   minShadowScale: 0.8
   maxShadowAlpha: 0.7
   minShadowAlpha: 0.5
@@ -274,8 +275,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 220, y: 270}
+  m_AnchoredPosition: {x: 0, y: -4}
+  m_SizeDelta: {x: 228, y: 276}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4523367858026694269
 CanvasRenderer:
@@ -329,14 +330,14 @@ Canvas:
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 1
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 99
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &7327237215911327422
 GameObject:

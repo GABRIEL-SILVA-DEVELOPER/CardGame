@@ -8,7 +8,7 @@ public class PopupText : MonoBehaviour
 
     [Header("Setup")]
     [SerializeField] private TextMeshProUGUI popupText;
-    [SerializeField] private string layerName;
+    [SerializeField] private string VFXLayerName;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private Canvas canvas;
 
@@ -18,7 +18,7 @@ public class PopupText : MonoBehaviour
         if (canvas != null)
         {
             canvas.overrideSorting = true;
-            canvas.sortingLayerName = layerName;
+            canvas.sortingLayerName = VFXLayerName;
             canvas.sortingOrder = 999;  
         }
 
@@ -36,25 +36,17 @@ public class PopupText : MonoBehaviour
             prefix = "+";
         }
 
-        // Original
-        // popupText.text = $"{prefix}{valueText}";
-
-        // TEST
-        if (isCritical)
-            popupText.text = $"{prefix}{valueText}";
-        else
-            popupText.text = $"{prefix}{valueText}";
-
+        popupText.text = $"{prefix}{valueText}";
 
         PlayFadeAnimation(isCritical);
     }
 
-    public void Setup(Vector3 position, int fontSize, PrefixType type, Color color, string strText)
+    public void Setup(Vector3 position, int fontSize, Color color, string strText)
     {
         if (canvas != null)
         {
             canvas.overrideSorting = true;
-            canvas.sortingLayerName = layerName;
+            canvas.sortingLayerName = VFXLayerName;
             canvas.sortingOrder = 999;  
         }
 
